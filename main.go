@@ -14,11 +14,12 @@ import (
 func setupRoutes(app *fiber.App) {
 	app.Use(logger.New())
 	// //:storeID
-	app.Get("/v1/hello/reverse:paramID", func(c *fiber.Ctx) error {
+	app.Get("/v1/hello/:paramID", func(c *fiber.Ctx) error {
+		//app.Get("/v1/hello/reverse:paramID", func(c *fiber.Ctx) error {
 		paramID := c.Params("paramID")
 		result := ""
-		for i := 0; i < len(paramID); i++ {
-
+		for _, v := range paramID {
+			result = string(v) + result
 		}
 		return c.JSON(fiber.Map{"code": 200, "data": map[string]string{"message": result}, "success": true})
 		//return c.JSON(fiber.Map{"code": 200, "data": map[string]string{"message": "Hello World"}, "success": true})
